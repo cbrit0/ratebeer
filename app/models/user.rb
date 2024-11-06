@@ -13,6 +13,12 @@ class User < ApplicationRecord
                        length: { in: 3..30 }
   validate :password_complexity
 
+  def favorite_beer
+    return nil if ratings.empty?
+
+    ratings.order(score: :desc).limit(1).first.beer
+  end
+
   private
 
   def password_complexity
