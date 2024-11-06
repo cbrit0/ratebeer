@@ -6,6 +6,7 @@ describe "Beer Creation" do
   let!(:brewery) { FactoryBot.create :brewery, name: "Test Brewery", year: 2000 }
   
   before :each do
+    FactoryBot.create :user, username: "Pekka", password: "Foobar1", password_confirmation: "Foobar1"
     sign_in(username: "Pekka", password: "Foobar1")
   end
 
