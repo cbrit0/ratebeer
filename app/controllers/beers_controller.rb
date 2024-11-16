@@ -3,11 +3,6 @@ class BeersController < ApplicationController
   before_action :set_breweries_and_styles_for_template, only: [:new, :edit, :create]
   before_action :ensure_that_signed_in, except: [:index, :show]
 
-  def set_breweries_and_styles_for_template
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
-  end
-
   # GET /beers or /beers.json
   def index
     @beers = Beer.all
@@ -20,14 +15,10 @@ class BeersController < ApplicationController
   # GET /beers/new
   def new
     @beer = Beer.new
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Low alcohol"]
   end
 
   # GET /beers/1/edit
   def edit
-    @breweries = Brewery.all
-    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Low alcohol"]
   end
 
   # POST /beers or /beers.json
@@ -41,7 +32,7 @@ class BeersController < ApplicationController
       else
         @breweries = Brewery.all
         @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
-        format.html { redirect_to beers_path, notice: "Name can't be blank" }
+        format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @beer.errors, status: :unprocessable_entity }
       end
     end
@@ -51,7 +42,7 @@ class BeersController < ApplicationController
   def update
     respond_to do |format|
       if @beer.update(beer_params)
-        format.html { redirect_to @beer, notice: "Beer was successfully updated." }
+        format.html { redirect_to beer_url(@beer), notice: "Beer was successfully updated." }
         format.json { render :show, status: :ok, location: @beer }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -65,12 +56,17 @@ class BeersController < ApplicationController
     @beer.destroy
 
     respond_to do |format|
-      format.html { redirect_to beers_path, status: :see_other, notice: "Beer was successfully destroyed." }
+      format.html { redirect_to beers_url, notice: "Beer was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+
+  def set_breweries_and_styles_for_template
+    @breweries = Brewery.all
+    @styles = ["Weizen", "Lager", "Pale ale", "IPA", "Porter", "Lowalcohol"]
+  end
 
   # Use callbacks to share common setup or constraints between actions.
   def set_beer

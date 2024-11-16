@@ -2,19 +2,9 @@
 
 <%= render @beer_club %>
 
-<h2><strong>members</strong></h2>
-
 <div>
-  <ul>
-    <% @beer_club.members.each do |member| %>
-    <li><%= link_to member.username, member %></li>
-    <% end %>
-  </ul>
-</div>
-
-<div>
-  <%= link_to("Edit this beer club", edit_beer_club_path(@beer_club)) if current_user %> |
+  <%= link_to "Edit this beer club", edit_beer_club_path(@beer_club) %> |
   <%= link_to "Back to beer clubs", beer_clubs_path %>
 
-  <%= button_to("Destroy this beer club", @beer_club, method: :delete) if current_user %>
+  <%= button_to "Destroy this beer club", @beer_club, method: :delete %>
 </div>

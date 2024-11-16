@@ -1,6 +1,5 @@
 class BeerClubsController < ApplicationController
   before_action :set_beer_club, only: %i[show edit update destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
 
   # GET /beer_clubs or /beer_clubs.json
   def index
@@ -26,7 +25,7 @@ class BeerClubsController < ApplicationController
 
     respond_to do |format|
       if @beer_club.save
-        format.html { redirect_to @beer_club, notice: "Beer club was successfully created." }
+        format.html { redirect_to beer_club_url(@beer_club), notice: "Beer club was successfully created." }
         format.json { render :show, status: :created, location: @beer_club }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +38,7 @@ class BeerClubsController < ApplicationController
   def update
     respond_to do |format|
       if @beer_club.update(beer_club_params)
-        format.html { redirect_to @beer_club, notice: "Beer club was successfully updated." }
+        format.html { redirect_to beer_club_url(@beer_club), notice: "Beer club was successfully updated." }
         format.json { render :show, status: :ok, location: @beer_club }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +52,7 @@ class BeerClubsController < ApplicationController
     @beer_club.destroy
 
     respond_to do |format|
-      format.html { redirect_to beer_clubs_path, status: :see_other, notice: "Beer club was successfully destroyed." }
+      format.html { redirect_to beer_clubs_url, notice: "Beer club was successfully destroyed." }
       format.json { head :no_content }
     end
   end

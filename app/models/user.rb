@@ -5,13 +5,15 @@ class User < ApplicationRecord
 
   has_many :ratings, dependent: :destroy
   has_many :beers, through: :ratings
+
   has_many :memberships, dependent: :destroy
   has_many :beer_clubs, through: :memberships
 
   validates :username, uniqueness: true,
-                       presence: true,
-                       length: { in: 3..30 }
-  validate :password_complexity
+                       length: { minimum: 3, maximum: 30 }
+
+  validates :password, length: { minimum: 4 },
+                       format: { with: /\A[A-Z].*\d|\d.*[A-Z]\z/, message: "must include one upper case letter and number" }
 
   def favorite_beer
     return nil if ratings.empty?
@@ -19,12 +21,23 @@ class User < ApplicationRecord
     ratings.order(score: :desc).limit(1).first.beer
   end
 
-  private
+  def favorite_by(my_ratings, criteria)
+    by_criteria = my_ratings
+                  .group_by { |rating| rating.beer.send(criteria) }
+                  .map { |key, val| [key, val.sum(&:score) / val.size] }
 
-  def password_complexity
-    # Checks that password is at least 4 characters long, includes at least one uppercase letter, and one digit
-    return if password.present? && password.match?(/\A(?=.*[A-Z])(?=.*\d).{4,}\z/)
+    by_criteria.max_by(&:last).first
+  end
 
-    errors.add(:password, "must be at least 4 characters long, and include at least one uppercase letter and one number")
+  def favorite_style
+    return nil if ratings.empty?
+
+    favorite_by(ratings, :style)
+  end
+
+  def favorite_brewery
+    return nil if ratings.empty?
+
+    favorite_by(ratings, :brewery)
   end
 end

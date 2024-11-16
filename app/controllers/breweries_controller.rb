@@ -26,7 +26,7 @@ class BreweriesController < ApplicationController
 
     respond_to do |format|
       if @brewery.save
-        format.html { redirect_to @brewery, notice: "Brewery was successfully created." }
+        format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully created." }
         format.json { render :show, status: :created, location: @brewery }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -39,7 +39,7 @@ class BreweriesController < ApplicationController
   def update
     respond_to do |format|
       if @brewery.update(brewery_params)
-        format.html { redirect_to @brewery, notice: "Brewery was successfully updated." }
+        format.html { redirect_to brewery_url(@brewery), notice: "Brewery was successfully updated." }
         format.json { render :show, status: :ok, location: @brewery }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -53,7 +53,7 @@ class BreweriesController < ApplicationController
     @brewery.destroy
 
     respond_to do |format|
-      format.html { redirect_to breweries_path, status: :see_other, notice: "Brewery was successfully destroyed." }
+      format.html { redirect_to breweries_url, notice: "Brewery was successfully destroyed." }
       format.json { head :no_content }
     end
   end

@@ -13,12 +13,12 @@ FactoryBot.define do
   factory :beer do
     name { "anonymous" }
     style { "Lager" }
-    brewery # the brewery associated with beer is created with brewery factory
+    brewery # olueeseen liittyvä panimo luodaan brewery-tehtaalla
   end
 
   factory :rating do
     score { 10 }
-    beer # The beer associated with rating is created with beer factory
-    user # The user associated with rating is created with user factory
+    beer # reittaukseen liittyvä olut luodaan beer-tehtaalla
+    user # reittaukseen liittyvä user luodaan user-tehtaalla
   end
 end

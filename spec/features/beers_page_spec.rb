@@ -2,47 +2,39 @@ require 'rails_helper'
 
 include Helpers
 
-describe "Beer Creation" do
-  let!(:brewery) { FactoryBot.create :brewery, name: "Test Brewery", year: 2000 }
-  
-  before :each do
-    FactoryBot.create :user, username: "Pekka", password: "Foobar1", password_confirmation: "Foobar1"
+describe "Beers" do
+  before :each do 
+    FactoryBot.create(:brewery, name: "Schlenkerla", year: 1678)
+    FactoryBot.create :user
     sign_in(username: "Pekka", password: "Foobar1")
   end
 
-  it "adds a beer with a valid name to the system" do
+  it "can be created with valid input" do
     visit new_beer_path
-
-    fill_in('beer[name]', with: "Test Beer")
-    select("Test Brewery", from: 'beer[brewery_id]')
-    select("Lager", from: "beer[style]")
-
-    # Submit the form
+    fill_in('beer[name]', with: 'Helles')
+    select('Lager', from: 'beer[style]')
+    select('Schlenkerla', from: 'beer[brewery_id]')
+  
     expect{
-      click_button "Create Beer"
-    }.to change{Beer.count}.from(0).to(1)
-
-    # Check if the beer was saved and we are redirected to the beer's details page
-    expect(page).to have_content "Beer was successfully created"
-    expect(Beer.count).to eq(1)
-    expect(Beer.first.name).to eq("Test Beer")
+      click_button('Create Beer')
+    }.to change{Beer.count}.by(1)
   end
+  
 
-  it "does not add a beer with an invalid name and shows an error" do
-    # Navigate to the beer creation page
+  it "can not be created with without a name" do
     visit new_beer_path
+    select('Lager', from: 'beer[style]')
+    select('Schlenkerla', from: 'beer[brewery_id]')
+  
+    expect{
+      click_button('Create Beer')
+    }.to change{Beer.count}.by(0)
 
-    # Fill in an empty name
-    fill_in('beer[name]', with: "")
-    select("Test Brewery", from: 'beer[brewery_id]')
-    select("Lager", from: 'beer[style]')
-
-    # Submit the form
-    click_button "Create Beer"
-
-    # Check that we are redirected back to the beer creation page with an error message
     expect(page).to have_content "Name can't be blank"
-    expect(current_path).to eq(beers_path)
-    expect(Beer.count).to eq(0)
   end
+
 end
+
+# rspec spec/features/beers_page_spec.rb
+
+# save_and_open_page
