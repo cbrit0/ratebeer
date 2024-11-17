@@ -5,6 +5,7 @@ include Helpers
 describe "Beers" do
   before :each do 
     FactoryBot.create(:brewery, name: "Schlenkerla", year: 1678)
+    FactoryBot.create(:style, name: "Lager", description: "text")
     FactoryBot.create :user
     sign_in(username: "Pekka", password: "Foobar1")
   end
@@ -12,7 +13,7 @@ describe "Beers" do
   it "can be created with valid input" do
     visit new_beer_path
     fill_in('beer[name]', with: 'Helles')
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
     select('Schlenkerla', from: 'beer[brewery_id]')
   
     expect{
@@ -23,7 +24,7 @@ describe "Beers" do
 
   it "can not be created with without a name" do
     visit new_beer_path
-    select('Lager', from: 'beer[style]')
+    select('Lager', from: 'beer[style_id]')
     select('Schlenkerla', from: 'beer[brewery_id]')
   
     expect{

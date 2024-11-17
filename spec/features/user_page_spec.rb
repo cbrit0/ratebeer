@@ -5,6 +5,7 @@ include Helpers
 describe "User" do
   before :each do
     FactoryBot.create :user
+    FactoryBot.create :style
   end
 
   describe "who has signed up" do
@@ -38,7 +39,8 @@ describe "User" do
   describe "when multiple ratings" do
     before :each do
       @user = User.first
-      create_beers_with_many_ratings({ user: @user, style: "Lager" }, 12, 19, 14)
+      @style = Style.first
+      create_beers_with_many_ratings({ user: @user, style: @style }, 12, 19, 14)
     end
 
     it "those are listed in user page" do

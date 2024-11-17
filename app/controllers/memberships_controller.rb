@@ -27,7 +27,7 @@ class MembershipsController < ApplicationController
 
     respond_to do |format|
       if @membership.save
-        format.html { redirect_to membership_url(@membership), notice: "Membership was successfully created." }
+        format.html { redirect_to beer_club_url(@membership.beer_club), notice: "#{current_user.username} welcome to the club." }
         format.json { render :show, status: :created, location: @membership }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -51,10 +51,10 @@ class MembershipsController < ApplicationController
 
   # DELETE /memberships/1 or /memberships/1.json
   def destroy
-    @membership.destroy
+    @existing_membership = current_user.memberships.find_by(beer_club: @beer_club)
 
     respond_to do |format|
-      format.html { redirect_to memberships_url, notice: "Membership was successfully destroyed." }
+      format.html { redirect_to user_url(current_user), notice: "Membership in #{@membership.beer_club.name} ended." }
       format.json { head :no_content }
     end
   end
@@ -73,6 +73,6 @@ class MembershipsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def membership_params
-    params.require(:membership).permit(:beer_club_id)
+    params.require(:membership).permit(:id, :beer_club_id, :user_id)
   end
 end

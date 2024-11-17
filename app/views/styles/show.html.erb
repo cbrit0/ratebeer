@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @style %>
+
+<h4>beers</h4>
+<ul>
+  <% @style.beers.each do |beer| %>
+    <li><%= link_to beer.name, beer_path(beer) %></li>
+  <% end %>
+</ul>

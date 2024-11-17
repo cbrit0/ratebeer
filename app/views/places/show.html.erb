@@ -1,0 +1,8 @@
+<h1><%= @place.name %></h1>
+<p>Address: <%= @place.street %></p>
+<p>City: <%= @place.city %></p>
+<p>Status: <%= @place.status %></p>
+<p>Phone: <%= @place.phone %></p>
+<p>Website: <a href="<%= @place.reviewlink %>" target="_blank"><%= @place.reviewlink %></a></p>
+
+<%= link_to 'Back to all places', places_path %>
