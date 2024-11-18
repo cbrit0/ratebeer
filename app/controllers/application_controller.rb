@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
   private
 
   def ensure_admin
-    unless current_user&.admin?
-      redirect_to root_path, notice: "You must be an administrator to perform this action."
-    end
+    return if current_user&.admin?
+
+    redirect_to root_path, notice: "You must be an administrator to perform this action."
   end
 end
