@@ -1,54 +1,63 @@
-<p style="color: green"><%= notice %></p>
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title"><%= @user.username %></h2>
 
-<h2><%= @user.username %></h2>
+      <% if current_user && current_user.admin && @user.frozen %>
+        <span class="badge bg-primary me-1">
+          closed
+        </span>
+      <% end %>
+      
+      <% if @user.beer_clubs.empty? %>
+        <p class="text-muted">Has not joined any club</p>
+      <% else %>
+        <h4 class="mt-4">Memberships</h4>
+        <ul class="list-group list-group-flush">
+          <% @user.beer_clubs.each do |club| %>
+            <li class="list-group-item">
+              <%= link_to club.name, club, class: "text-decoration-none" %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      
+      <% if @user.ratings.empty? %>
+        <p class="mt-4 text-muted">Has not yet made ratings</p>
+      <% else %>
+        <div class="mt-4">
+          <p>Has made <%= pluralize(@user.ratings.count, 'rating') %> with an average of <strong><%= @user.average_rating %></strong></p>
+          <p>Favorite style: <strong><%= @user.favorite_style.name %></strong></p>
+          <p>Favorite brewery: <strong><%= @user.favorite_brewery.name %></strong></p>
+        </div>
 
-<% if @user.beer_clubs.empty? %>
-  Has not joined any club
-<% else %>
-  <h4>memberships</h4>
+        <h4 class="mt-4">Ratings</h4>
+        <ul class="list-group list-group-flush">
+          <% @user.ratings.each do |rating| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><%= "#{rating.score} #{rating.beer.name}" %></span>
+              <% if @user == current_user %>
+                <%= button_to 'Delete', rating, method: :delete, class: "btn btn-sm btn-danger", form: { style: 'display:inline-block;', data: { 'turbo-confirm': 'Are you sure?' } } %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+      
+      <% if @user == current_user %>
+        <div class="mt-4">
+          <%= link_to "Change password", edit_user_path(@user), class: "btn btn-secondary me-2" %>
+          <%= button_to "Destroy this user", @user, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger" %>
+        </div>
+      <% end %>
 
-  <ul>
-    <% @user.beer_clubs.each do |club| %>
-      <li>
-        <%= link_to club.name, club %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @user.ratings.empty? %>
-  Has not yet made ratings
-<% else %>  
-  <div>
-    Has made <%= pluralize(@user.ratings.count, 'rating') %> with an average of <%= @user.average_rating %>
-  </div>  
-
-  <div>
-    Favorite style <%= @user.favorite_style.name %>
-  </div>
-
-  <div>
-    Favorite brewery <%= @user.favorite_brewery.name %>
-  </div>
-
-  <h4>ratings</h4>
-
-  <ul>
-    <% @user.ratings.each do |rating| %>
-      <li>
-        <%= "#{rating.score} #{rating.beer.name}" %>
-        <% if @user == current_user %>
-          <%= button_to 'delete', rating, method: :delete, form: { style: 'display:inline-block;',  data: { 'turbo-confirm': 'Are you sure?' } } %>
+      <% if current_user&.admin? %>
+        <% if @user.frozen? %>
+          <%= button_to 'Reactivate Account', unfreeze_user_path(@user), method: :patch, class: 'btn btn-success' %>
+        <% else %>
+          <%= button_to 'Freeze Account', freeze_user_path(@user), method: :patch, class: 'btn btn-danger' %>
         <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-
-<% if @user == current_user %>
-  <div>
-    <%= link_to "Change password", edit_user_path(@user) %> |
-
-    <%= button_to "Destroy this user", @user, method: :delete %>
+      <% end %>
+    </div>
   </div>
-<% end %>
+</div>

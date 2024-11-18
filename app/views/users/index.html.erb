@@ -1,4 +1,4 @@
-<p style="color: green"><%= notice %></p>
+
 
 <h1>Users</h1>
 
@@ -7,5 +7,11 @@
     <p>
       <%= link_to user.username, user %>
     </p>
+
+    <% if current_user && current_user.admin && user.frozen %>
+      <span class="badge bg-primary me-1">
+        closed
+      </span>
+    <% end %>
   <% end %>
 </div>

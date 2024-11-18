@@ -4,6 +4,21 @@
       "/home/crist/ratebeer/app/helpers/application_helper.rb": {
         "lines": [
           1,
+          1,
+          null,
+          1,
+          8,
+          null,
+          null,
+          1,
+          0,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
           null
         ]
       },
@@ -59,6 +74,10 @@
           null,
           0,
           null,
+          null,
+          1,
+          1,
+          null,
           null
         ]
       },
@@ -75,7 +94,9 @@
           1,
           null,
           1,
-          5,
+          22,
+          null,
+          17,
           null,
           null
         ]
@@ -124,6 +145,21 @@
           null,
           5,
           null,
+          null,
+          1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          1,
+          0,
+          null,
+          null,
+          1,
+          0,
+          null,
           null
         ]
       },
@@ -140,8 +176,15 @@
           1,
           1,
           null,
+          4,
+          4,
+          null,
           1,
           39,
+          null,
+          null,
+          1,
+          1,
           null,
           null
         ]
@@ -150,6 +193,20 @@
         "lines": [
           1,
           1,
+          null,
+          1,
+          8,
+          2,
+          null,
+          6,
+          6,
+          null,
+          2,
+          null,
+          null,
+          1,
+          1,
+          null,
           null
         ]
       },
@@ -163,6 +220,8 @@
           1,
           6,
           null,
+          6,
+          0,
           6,
           5,
           5,
@@ -187,13 +246,21 @@
           1,
           null,
           1,
-          84,
+          96,
           null,
-          54,
+          62,
           null,
           null,
           1,
           4,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
           null,
           null
         ]
@@ -202,6 +269,19 @@
         "lines": [
           1,
           1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
           null,
           null,
           1,
@@ -299,11 +379,14 @@
           1,
           null,
           null,
+          null,
+          2,
           null
         ]
       },
       "/home/crist/ratebeer/app/controllers/beers_controller.rb": {
         "lines": [
+          1,
           1,
           1,
           1,
@@ -393,9 +476,20 @@
           1,
           1,
           1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          0,
+          null,
+          0,
+          null,
           null,
           null,
           1,
+          3,
           3,
           null,
           null,
@@ -570,6 +664,11 @@
           1,
           1,
           1,
+          1,
+          1,
+          1,
+          1,
+          1,
           null,
           null,
           1,
@@ -619,6 +718,7 @@
       },
       "/home/crist/ratebeer/app/controllers/beer_clubs_controller.rb": {
         "lines": [
+          0,
           0,
           0,
           null,
@@ -786,6 +886,8 @@
         "lines": [
           0,
           0,
+          null,
+          0,
           0,
           0,
           null,
@@ -821,6 +923,6 @@
         }
       }
     },
-    "timestamp": 1731855751
+    "timestamp": 1731921178
   }
 }

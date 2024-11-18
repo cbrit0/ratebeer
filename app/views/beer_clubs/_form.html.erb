@@ -1,8 +1,7 @@
-<%= form_with(model: beer_club) do |form| %>
+<%= form_with(model: beer_club, html: { class: "needs-validation" }) do |form| %>
   <% if beer_club.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(beer_club.errors.count, "error") %> prohibited this beer_club from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(beer_club.errors.count, "error") %> prohibited this beer club from being saved:</h4>
       <ul>
         <% beer_club.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,22 +10,22 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :name, style: "display: block" %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control", placeholder: "Enter club name" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :founded, class: "form-label" %>
+    <%= form.number_field :founded, class: "form-control", placeholder: "Enter year founded" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :city, class: "form-label" %>
+    <%= form.text_field :city, class: "form-control", placeholder: "Enter city" %>
   </div>
 
   <div>
-    <%= form.label :founded, style: "display: block" %>
-    <%= form.number_field :founded %>
-  </div>
-
-  <div>
-    <%= form.label :city, style: "display: block" %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit "Create Beer Club", class: "btn btn-primary" %>
   </div>
 <% end %>

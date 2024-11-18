@@ -1,5 +1,18 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update destroy]
+  before_action :ensure_admin, only: [:freeze, :unfreeze]
+
+  def freeze
+    @user = User.find(params[:id])
+    @user.update_attribute :frozen, true
+    redirect_to user_path(@user), notice: "User account has been frozen."
+  end
+
+  def unfreeze
+    @user = User.find(params[:id])
+    @user.update_attribute :frozen, false
+    redirect_to user_path(@user), notice: "User account has been reactivated."
+  end
 
   # GET /users or /users.json
   def index

@@ -6,7 +6,9 @@ class SessionsController < ApplicationController
   def create
     user = User.find_by username: params[:username]
     # tarkastetaan että käyttäjä olemassa, ja että salasana on oikea
-    if user&.authenticate(params[:password])
+    if user&.frozen?
+      redirect_to signin_path, notice: "Your account has been frozen. Please contact the administrator."
+    elsif user&.authenticate(params[:password])
       session[:user_id] = user.id
       redirect_to user_path(user), notice: "Welcome back!"
     else

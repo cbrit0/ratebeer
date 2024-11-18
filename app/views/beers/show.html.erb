@@ -1,4 +1,4 @@
-<p style="color: green"><%= notice %></p>
+
 
 <%= render @beer %>
 
@@ -13,6 +13,8 @@
 
   <div>
     <%= link_to "Edit this beer", edit_beer_path(@beer) %>
-    <%= button_to "Destroy this beer", @beer, method: :delete %>
+    <% if current_user&.admin? %>
+      <%= button_to "Destroy this beer", @beer, method: :delete %>
+    <% end %>
   </div>
 <% end %>

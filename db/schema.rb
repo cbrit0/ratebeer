@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_11_16_213535) do
+ActiveRecord::Schema[7.0].define(version: 2024_11_18_081851) do
   create_table "beer_clubs", force: :cascade do |t|
     t.string "name"
     t.integer "founded"
@@ -33,6 +33,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_213535) do
     t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "active"
   end
 
   create_table "memberships", force: :cascade do |t|
@@ -62,6 +63,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_11_16_213535) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "password_digest"
+    t.boolean "admin"
+    t.boolean "frozen"
   end
 
   add_foreign_key "beers", "styles"

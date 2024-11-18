@@ -1,0 +1,8 @@
+<ul class="list-group">
+  <% ratings.each do |rating| %>
+    <li class="list-group-item">
+      <strong><%= rating.beer.name %></strong> - <%= rating.score %> 
+      by <%= link_to rating.user.username, rating.user %>
+    </li>
+  <% end %>
+</ul>

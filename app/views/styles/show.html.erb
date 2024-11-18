@@ -1,4 +1,4 @@
-<p style="color: green"><%= notice %></p>
+
 
 <%= render @style %>
 
@@ -8,3 +8,7 @@
     <li><%= link_to beer.name, beer_path(beer) %></li>
   <% end %>
 </ul>
+
+<% if current_user&.admin? %>
+  <%= edit_and_destroy_buttons(@style) %>
+<% end %>

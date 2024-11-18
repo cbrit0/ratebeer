@@ -46,8 +46,8 @@ describe "User" do
     it "those are listed in user page" do
       visit user_path(@user)
       expect(page).to have_content 'Has made 3 ratings with an average of 15'
-      expect(page).to have_content 'Favorite brewery anonymous'
-      expect(page).to have_content 'Favorite style Lager'
+      expect(page).to have_content 'Favorite brewery: anonymous'
+      expect(page).to have_content 'Favorite style: Lager'
       expect(page).to have_content '12 anonymous'
       expect(page).to have_content '19 anonymous'
       expect(page).to have_content '14 anonymous'
@@ -60,7 +60,7 @@ describe "User" do
     
       it "ratings can be deleted" do
         expect{
-          page.first(:button, "delete").click
+          page.first(:button, "Delete").click
         }.to change{Rating.count}.by(-1)
       end
     end    

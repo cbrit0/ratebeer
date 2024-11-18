@@ -9,7 +9,14 @@ class Brewery < ApplicationRecord
   has_many :beers, dependent: :destroy
   has_many :ratings, through: :beers
 
+  scope :active, -> { where active: true }
+  scope :retired, -> { where active: [nil, false] }
+
   def year_not_greater_than_this_year
     errors.add(:year, "can't be greater than current year") if year > Time.now.year
+  end
+
+  def self.top(n)
+    Brewery.all.sort_by(&:average_rating).reverse.first(n)
   end
 end

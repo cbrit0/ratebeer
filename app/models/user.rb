@@ -40,4 +40,19 @@ class User < ApplicationRecord
 
     favorite_by(ratings, :brewery)
   end
+
+  def self.most_active(n)
+    User.left_joins(:ratings)
+        .group(:id)
+        .order('COUNT(ratings.id) DESC')
+        .limit(n)
+  end
+
+  def make_admin!
+    update_attribute(:admin, true)
+  end
+
+  def active_for_authentication?
+    !frozen?
+  end
 end

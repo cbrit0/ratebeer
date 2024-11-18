@@ -1,10 +1,13 @@
-<p style="color: green"><%= notice %></p>
+
 
 <%= render @brewery %>
 
 <% if current_user %>
   <div>
     <%= link_to "Edit this brewery", edit_brewery_path(@brewery) %> |
-    <%= button_to "Destroy this brewery", @brewery, method: :delete %>
+    <% if current_user&.admin? %>
+      <%= button_to "Destroy this brewery", @brewery, method: :delete %>
+    <% end %>
+    <%= link_to "change activity", toggle_activity_brewery_path(@brewery.id), data: {turbo_method: "post"}, class: "btn btn-primary" %>
   </div>
 <% end %>

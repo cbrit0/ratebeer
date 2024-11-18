@@ -1,26 +1,34 @@
-<div id="<%= dom_id brewery %>">
-  <h2>
-    <%= link_to brewery.name, brewery %>
-  </h2>
+<div id="<%= dom_id brewery %>" class="card mb-4">
+  <div class="card-body">
+    <h2 class="card-title">
+      <%= brewery.name %>
 
-  <p>
-    Established at <%= brewery.year %>
-  </p>
-
-  <p>
-    Beers count: <%= brewery.beers.count%>
-  </p>
-
-  <p>
-    <% brewery.beers.each do |beer| %>
-      <%= link_to beer.name, beer %>
+      <% if not brewery.active  %>
+        <span class="badge bg-secondary">retired</span>
+      <% end %>
+    </h2>
+    
+    <p class="text-muted mb-2">Established in <strong><%= brewery.year %></strong></p>
+    
+    <p>
+      Beers count: <strong><%= brewery.beers.count %></strong>
+    </p>
+    
+    <div class="mb-2">
+      <% if brewery.beers.any? %>
+        <h6 class="fw-bold">Beers:</h6>
+        <% brewery.beers.each do |beer| %>
+          <span class="badge bg-secondary me-1">
+            <%= link_to beer.name, beer, class: "text-light text-decoration-none" %>
+          </span>
+        <% end %>
+      <% end %>
+    </div>
+    
+    <% if brewery.ratings.empty? %>
+      <p class="text-warning">Brewery has not yet been rated!</p>
+    <% else %>
+      <p>Brewery has <strong><%= pluralize(brewery.ratings.count, 'rating') %></strong> with an average rating of <strong><%= brewery.average_rating %></strong></p>
     <% end %>
-  </p>
-
-  <% if brewery.ratings.empty? %>
-    brewery has not yet been rated!
-  <% else %>
-    Brewery has <%= pluralize(brewery.ratings.count, 'rating') %> with an average of <%= brewery.average_rating %>
-  <% end %>
-
+  </div>
 </div>

@@ -1,10 +1,17 @@
 Rails.application.routes.draw do
-  resources :styles, only: [:index, :show]
+  resources :styles
   resources :memberships
   resources :beer_clubs
-  resources :users
+  resources :users do
+    member do
+      patch :freeze
+      patch :unfreeze
+    end
+  end
   resources :beers
-  resources :breweries
+  resources :breweries do
+    post 'toggle_activity', on: :member
+  end
   resources :ratings, only: [:index, :new, :create, :destroy]
   resource :session, only: [:new, :create, :destroy]
   resources :places, only: [:index, :show]
