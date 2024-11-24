@@ -1,8 +1,9 @@
 class Beer < ApplicationRecord
   include RatingAverage
+  include Topable
 
   belongs_to :style
-  belongs_to :brewery
+  belongs_to :brewery, touch: true
   has_many :ratings, dependent: :destroy
   has_many :raters, -> { distinct }, through: :ratings, source: :user
 
@@ -17,9 +18,5 @@ class Beer < ApplicationRecord
     return 0 if ratings.empty?
 
     ratings.map(:score).sum / ratings.count.to_f
-  end
-
-  def self.top(n)
-    Beer.all.sort_by(&:average_rating).reverse.first(n)
   end
 end

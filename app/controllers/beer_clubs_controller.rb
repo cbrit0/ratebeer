@@ -4,7 +4,7 @@ class BeerClubsController < ApplicationController
 
   # GET /beer_clubs or /beer_clubs.json
   def index
-    @beer_clubs = BeerClub.all
+    @beer_clubs = BeerClub.order(sort_column)
   end
 
   # GET /beer_clubs/1 or /beer_clubs/1.json
@@ -72,5 +72,16 @@ class BeerClubsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def beer_club_params
     params.require(:beer_club).permit(:name, :founded, :city)
+  end
+
+  def sort_column
+    case params[:sort]
+    when 'city'
+      'city'
+    when 'year'
+      'founded'
+    else
+      'name' # Default sorting by name
+    end
   end
 end

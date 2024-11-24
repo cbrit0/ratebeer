@@ -1,24 +1,26 @@
-<div id="<%= dom_id beer_club %>">
-  <h2>
-    <%= beer_club.name %>
-  </h2>
+<div id="<%= dom_id beer_club %>" class="container my-4">
+  <div class="card">
+    <div class="card-body">
+      <h2 class="card-title text-center mb-4"><%= beer_club.name %></h2>
 
-  <p>
-    <strong>Founded:</strong>
-    <%= beer_club.founded %>
-  </p>
+      <div class="mb-3">
+        <p class="mb-1"><strong>Founded:</strong> <%= beer_club.founded %></p>
+        <p><strong>City:</strong> <%= beer_club.city %></p>
+      </div>
 
-  <p>
-    <strong>City:</strong>
-    <%= beer_club.city %>
-  </p>
-
-  <h4>members</h4>
-
-  <% beer_club.members.each do |member| %>
-    <p>
-      <%= link_to member.username, member %>
-    </p>
-  <% end %>
-
+      <h4 class="mb-3">Members</h4>
+      
+      <% if beer_club.members.any? %>
+        <ul class="list-group">
+          <% beer_club.members.each do |member| %>
+            <li class="list-group-item">
+              <%= link_to member.username, member, class: "text-decoration-none" %>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-muted">This club currently has no members.</p>
+      <% end %>
+    </div>
+  </div>
 </div>

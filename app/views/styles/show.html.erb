@@ -1,14 +1,23 @@
+<div class="container my-4">
+  <%= render @style %>
 
-
-<%= render @style %>
-
-<h4>beers</h4>
-<ul>
-  <% @style.beers.each do |beer| %>
-    <li><%= link_to beer.name, beer_path(beer) %></li>
+  <h4 class="mt-4">Beers</h4>
+  
+  <% if @style.beers.any? %>
+    <ul class="list-group">
+      <% @style.beers.each do |beer| %>
+        <li class="list-group-item">
+          <%= link_to beer.name, beer_path(beer), class: "text-decoration-none" %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p class="text-muted">No beers available for this style.</p>
   <% end %>
-</ul>
 
-<% if current_user&.admin? %>
-  <%= edit_and_destroy_buttons(@style) %>
-<% end %>
+  <% if current_user&.admin? %>
+    <div class="mt-4">
+      <%= edit_and_destroy_buttons(@style) %>
+    </div>
+  <% end %>
+</div>

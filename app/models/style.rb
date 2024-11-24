@@ -1,4 +1,5 @@
 class Style < ApplicationRecord
+  include Topable
   has_many :beers
 
   def average_rating
@@ -9,9 +10,5 @@ class Style < ApplicationRecord
     total_ratings = beers_with_ratings.sum { |beer| beer.ratings.size }
 
     total_score / total_ratings
-  end
-
-  def self.top(n)
-    all.sort_by(&:average_rating).reverse.first(n)
   end
 end

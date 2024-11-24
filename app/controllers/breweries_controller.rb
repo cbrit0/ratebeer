@@ -1,7 +1,11 @@
 class BreweriesController < ApplicationController
   before_action :set_brewery, only: %i[show edit update destroy]
-  before_action :ensure_that_signed_in, except: [:index, :show]
+  before_action :ensure_that_signed_in, except: [:index, :show, :list]
   before_action :ensure_admin, only: [:destroy]
+  before_action :expire_cache, only: [:create, :update, :destroy]
+
+  def list
+  end
 
   def toggle_activity
     brewery = Brewery.find(params[:id])
@@ -14,6 +18,7 @@ class BreweriesController < ApplicationController
 
   # GET /breweries or /breweries.json
   def index
+    @breweries = Brewery.all
     @active_breweries = Brewery.active
     @retired_breweries = Brewery.retired
   end
@@ -79,5 +84,9 @@ class BreweriesController < ApplicationController
   # Only allow a list of trusted parameters through.
   def brewery_params
     params.require(:brewery).permit(:name, :year, :active)
+  end
+
+  def expire_cache
+    expire_fragment('brewerylist')
   end
 end

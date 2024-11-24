@@ -1,5 +1,6 @@
 class RatingsController < ApplicationController
   def index
+    # Ratings page performance improvement: eventual consistency
     @ratings = Rating.all
     @top_beers = Beer.top(3)
     @top_breweries = Brewery.top(3)

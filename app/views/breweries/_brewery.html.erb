@@ -1,5 +1,6 @@
 <div id="<%= dom_id brewery %>" class="card mb-4">
   <div class="card-body">
+    <% cache @brewery do %>
     <h2 class="card-title">
       <%= brewery.name %>
 
@@ -14,21 +15,36 @@
       Beers count: <strong><%= brewery.beers.count %></strong>
     </p>
     
-    <div class="mb-2">
-      <% if brewery.beers.any? %>
+    <% if brewery.beers.any? %>
+      <div class="table-responsive">
         <h6 class="fw-bold">Beers:</h6>
-        <% brewery.beers.each do |beer| %>
-          <span class="badge bg-secondary me-1">
-            <%= link_to beer.name, beer, class: "text-light text-decoration-none" %>
-          </span>
-        <% end %>
-      <% end %>
-    </div>
+        <table class="table table-striped table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Style</th>
+              <th>Rating</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% brewery.beers.each do |beer| %>
+              <tr>
+                <td><%= link_to beer.name, beer %></td>
+                <td><%= beer.style.name %></td>
+                <td><%= beer.average_rating %></td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
     
     <% if brewery.ratings.empty? %>
       <p class="text-warning">Brewery has not yet been rated!</p>
     <% else %>
       <p>Brewery has <strong><%= pluralize(brewery.ratings.count, 'rating') %></strong> with an average rating of <strong><%= brewery.average_rating %></strong></p>
+    <% end %>
+
     <% end %>
   </div>
 </div>

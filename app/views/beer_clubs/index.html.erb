@@ -1,13 +1,25 @@
+<div class="container my-4">
+  <h1 class="text-center mb-4">Beer Clubs</h1>
 
+  <div class="d-flex justify-content-center align-items-center mb-3">
+    <strong class="me-2">Sort by:</strong>
+    <%= link_to 'Name', beer_clubs_path(sort: 'name'), class: 'btn btn-outline-primary btn-sm me-1' %>
+    <%= link_to 'City', beer_clubs_path(sort: 'city'), class: 'btn btn-outline-primary btn-sm me-1' %>
+    <%= link_to 'Year', beer_clubs_path(sort: 'year'), class: 'btn btn-outline-primary btn-sm' %>
+  </div>
 
-<h1>Beer clubs</h1>
+  <div id="beer_clubs" class="list-group">
+    <% @beer_clubs.each do |beer_club| %>
+      <a href="<%= beer_club_path(beer_club) %>" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+        <span>
+          <strong><%= beer_club.name %></strong>
+          <small class="text-muted">(<%= beer_club.city %>, founded in <%= beer_club.founded %>)</small>
+        </span>
+      </a>
+    <% end %>
+  </div>
 
-<div id="beer_clubs">
-  <% @beer_clubs.each do |beer_club| %>
-    <p>
-      <%= link_to beer_club.name, beer_club %>
-    </p>
-  <% end %>
+  <div class="mt-4 text-center">
+    <%= link_to "New Beer Club", new_beer_club_path, class: "btn btn-primary" %>
+  </div>
 </div>
-
-<%= link_to "New beer club", new_beer_club_path %>

@@ -1,5 +1,6 @@
 class Brewery < ApplicationRecord
   include RatingAverage
+  include Topable
 
   validates :name, presence: true
   validates :year, numericality: { greater_than_or_equal_to: 1040,
